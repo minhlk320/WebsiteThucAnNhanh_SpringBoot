@@ -1,0 +1,42 @@
+<body xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/header :: header">
+</head>
+<nav th:replace="/header :: navbar"></nav>
+<main class="page">
+	<section class="clean-block slider">
+		<div class="container">
+			<div class="block-heading">
+				<h2 class="text-info">HQStore</h2>
+				<p>Thông tin tài khoản</p>
+			</div>
+
+			<div class="container">
+				<form th:action="@{/account/update}" th:object="${account}" method="post">
+					<div class="form-group">
+						<p><input class="form-control" type="hidden" th:text="${account.accountID}" th:value="*{accountID}"/></p>
+						<p>
+							Tên tài khoản: <input class="form-control" type="text" th:field="*{accountName}" th:value="*{accountName}" disabled/>
+						</p>
+						<p>
+							Họ và Tên: <input class="form-control" type="text" th:field="*{customer.firstName}" th:value="*{customer.firstName}" required  />
+						</p>
+						<p>
+							Địa chỉ: <input class="form-control" type="text" th:field="*{customer.address}" th:value="*{customer.address}" required />
+						</p>
+						<p>
+							Email: <input class="form-control" type="email" th:field="*{customer.email}" th:value="*{customer.email}" required />
+						</p>
+						<p>
+							Số điện thoại: <input class="form-control" type="number" th:field="*{customer.phoneNumber}" th:value="*{customer.phoneNumber}" required />
+						</p>
+						<button type="submit" class="btn btn-primary">Lưu</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+</main>
+<div th:replace="/header :: footer"></div>
+</body>
+
+</html>

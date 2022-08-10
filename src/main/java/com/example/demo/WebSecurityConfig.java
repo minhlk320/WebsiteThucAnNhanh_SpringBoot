@@ -1,21 +1,17 @@
 package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.demo.service.UserDetailsServiceImp;
+import com.example.demo.service.impl.UserDetailsServiceImp;
 
 @Configuration
 @EnableWebSecurity
@@ -37,19 +33,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/quanly","/quanly/sanpham","/quanly/donhang").access("hasRole('admin')");
+		http.authorizeRequests().antMatchers("/management","/management/product","/management/order").access("hasRole('admin')");
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 		http.authorizeRequests()
-		.antMatchers("/","/dangnhap","/sanpham","/dangky").permitAll()
+		.antMatchers("/","/login","/products","/signup").permitAll()
 		.and()
 		.authorizeRequests()
-		.antMatchers("/giohang/thanhtoan","/sanpham_danhgia/{maSanPham}","/giohang/checkout","/hoantat").authenticated()
+		.antMatchers("/cart/checkout","/review/{id}","/card/checkout","/done").authenticated()
 		.and()
 		.formLogin()
-		.loginPage("/dangnhap").permitAll()
+		.loginPage("/login").permitAll()
 		.and()
 		.logout()
-		.logoutUrl("/dangxuat")
+		.logoutUrl("/logout")
 		.permitAll();
 	}
 	public void configure(WebSecurity web) throws Exception {

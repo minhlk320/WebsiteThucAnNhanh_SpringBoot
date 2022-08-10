@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head><title>Chi tiết sản phẩm <th:block
+		th:text="${product.productName}"></th:block>
+</title>
+	<div th:replace="/header :: header"></div>
+</head>
+<body>
+<nav th:replace="/header :: navbar"></nav>
+<main class="page product-page">
+	<section class="clean-block clean-product dark">
+		<div class="container">
+			<div class="block-heading">
+				<h1></h1>
+				<h2 class="text-info">Chi tiết sản phẩm</h2>
+				<p>Chi tiết - Sản phẩm</p>
+			</div>
+			<div class="block-content">
+				<div class="product-info">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="gallery">
+								<div class="sp-wrap">
+									<a th:href="@{${product.imgURL}}" size="300px"><img
+											class="img-fluid d-block mx-auto"
+											th:src="@{${product.imgURL}}"></a>
+
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="info">
+								<h3 th:text="${product.productName}"></h3>
+								<div class="price">
+									<h3 th:text="${product.price+'00VND'} "></h3>
+								</div>
+								<a
+										th:href="@{'/cart/add/{id}'(id=${product.productID})}">
+									<button class="btn btn-sm" type="button">Thêm
+										vào giỏ</button>
+								</a>
+								<div class="summary">
+									<p th:text="${product.description}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="clean-related-items">
+					<h3>Các ý kiến đánh giá</h3>
+					<div class="items">
+						<div class="row justify-content-center">
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<th:block th:each="review : ${product.reviews}">
+									<div class="col-12">
+										<div class="clean-product-item">
+											<span th:text="${review.customer+' đã nhận xét '}"></span>
+											<span th:text="${review.description}"></span>
+										</div>
+									</div>
+								</th:block>
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<form th:action="@{/review/{id}(id=${product.productID})}" th:object="${review}"
+									  method="POST">
+									<div class="form-group">
+											<textarea class="form-control" required="required"
+													  placeholder="Để lại đánh giá của bạn"
+													  th:field="*{reviewDescription}" ></textarea>
+										<input class="form-control" type="hidden" th:field="*{product}" th:value="*{product}"/>
+										<button class="btn btn-primary" type="submit">Gửi
+											đánh giá</button>
+									</div>
+								</form></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</main>
+	<footer><div th:replace="/header :: footer"></div></footer>
+</body>
+
+</html>

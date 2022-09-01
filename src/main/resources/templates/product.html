@@ -32,7 +32,7 @@
 							<div class="info">
 								<h3 th:text="${product.productName}"></h3>
 								<div class="price">
-									<h3 th:text="${product.price+'00VND'} "></h3>
+									<h3 th:text="${product.unitPrice+'00VND'} "></h3>
 								</div>
 								<a
 										th:href="@{'/cart/add/{id}'(id=${product.productID})}">
